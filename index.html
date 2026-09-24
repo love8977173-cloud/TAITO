@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title id="pageTitle">爪哇魯多模型店 - 預購商品目錄</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html, body {
+      overscroll-behavior-y: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.5rem;
+    }
+    @media (min-width: 640px) {
+      .catalog-grid {
+        gap: 0.75rem;
+      }
+    }
+    @media (min-width: 1024px) {
+      .catalog-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+        max-width: 1100px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+    .card-img-container {
+      height: 140px;
+    }
+    @media (min-width: 640px) {
+      .card-img-container {
+        height: 200px;
+      }
+    }
+    @media (min-width: 1024px) {
+      .card-img-container {
+        height: 240px;
+      }
+    }
+    .img-placeholder {
+      background-color: #1e293b;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between">
+  <div>
+    <!-- LINE 提示條 (僅 LINE 顯示) -->
+    <div id="lineBrowserBanner" class="hidden bg-emerald-700 text-white px-3 py-1 text-[11px] flex items-center justify-between shadow-sm">
+      <div class="truncate">
+        <span>💡 LINE 內建瀏覽器可能影響體驗，建議以瀏覽器開啟</span>
+      </div>
+      <button onclick="openInExternalBrowser()" class="px-2 py-0.5 bg-white text-emerald-900 font-bold rounded text-[10px] ml-2 flex-shrink-0">
+        瀏覽器開啟 ↗
+      </button>
+    </div>
+
+    <!-- 頂部導航列 -->
+    <header class="sticky top-0 z-40 bg-slate-900/98 backdrop-blur border-b border-slate-800 px-2.5 py-2 shadow-md">
+      <div class="max-w-7xl mx-auto flex flex-col gap-1.5">
+        
+        <div class="flex items-center justify-between gap-1 w-full">
+          <div class="flex items-center space-x-1 flex-shrink-0 bg-slate-800/90 px-2 py-0.5 rounded border border-slate-700">
+            <span class="text-sm">🤖</span>
+            <span class="text-[11px] sm:text-xs font-bold text-slate-200">爪哇魯多</span>
+          </div>
+          
+          <div class="flex-1 text-center px-1 truncate">
+            <h1 id="headerBrand" class="text-xs sm:text-base font-black tracking-wider text-amber-400 truncate">萬代模型預計到貨追加</h1>
+          </div>
+
+          <div class="flex items-center space-x-1 flex-shrink-0">
+            <!-- PC 端 (md以上) 完全隱藏外部開啟鈕 -->
+            <button onclick="openInExternalBrowser()" title="以手機預設瀏覽器開啟" 
+                    class="md:hidden px-1.5 py-0.5 bg-slate-800 border border-slate-600 rounded text-[10px] font-semibold text-slate-200 shadow">
+              🌐 瀏覽器
+            </button>
+            <div class="bg-slate-800/90 px-2 py-0.5 rounded border border-rose-500/40 text-right">
+              <span class="text-[10px] text-rose-300">截止:</span>
+              <span id="headerCloseDate" class="text-[11px] sm:text-xs font-bold text-rose-400 ml-0.5">09/28</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center py-0.5 bg-slate-800/40 rounded border border-slate-800/80">
+          <p id="headerSubtitle" class="text-[10px] sm:text-xs font-medium text-slate-300 truncate px-2">追加訂單砍單率極高，介意者請勿下單。</p>
+        </div>
+
+        <div class="flex items-center justify-between gap-2">
+          <div class="bg-slate-800 p-0.5 rounded border border-slate-700 flex text-[10px] font-semibold flex-shrink-0">
+            <button id="btnCardMode" onclick="switchViewMode('card')" class="px-2 py-1 rounded bg-amber-500 text-slate-950 font-bold">🔲 卡片</button>
+            <button id="btnListMode" onclick="switchViewMode('list')" class="px-2 py-1 rounded text-slate-300 hover:text-white font-bold">📋 清單</button>
+          </div>
+          
+          <div class="flex-1">
+            <input id="searchInput" type="text" placeholder="🔍 搜尋條碼、品名關鍵字..." 
+                   class="w-full px-2.5 py-1 rounded-lg bg-slate-800 border border-slate-600 focus:outline-none focus:ring-1 focus:ring-amber-400 text-xs text-white placeholder-slate-400 shadow-inner">
+          </div>
+        </div>
+
+      </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-2 py-2">
+      <div id="productGrid" class="catalog-grid"></div>
+      <div id="productList" class="hidden flex flex-col gap-2 max-w-4xl mx-auto"></div>
+    </main>
+  </div>
+
+  <footer class="bg-slate-900/90 border-t border-slate-800 py-2.5 px-3 mt-4">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
+      <div id="pageInfo" class="text-slate-400 text-[11px]">顯示第 1 / 1 頁 (共 0 項)</div>
+      <div class="flex items-center gap-1" id="paginationControls"></div>
+    </div>
+  </footer>
+
+  <!-- 外部瀏覽器引導彈窗 -->
+  <div id="lineGuideModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" onclick="closeLineGuide()">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-sm w-full p-4 text-center shadow-2xl" onclick="event.stopPropagation()">
+      <div class="text-2xl mb-1">🧭</div>
+      <h3 class="text-sm font-bold text-amber-400 mb-2">以手機瀏覽器開啟</h3>
+      <div class="text-xs text-slate-300 space-y-1 text-left bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+        <p>1. 點擊螢幕角落選單「<strong class="text-white">⋯</strong>」或「<strong class="text-white">︙</strong>」。</p>
+        <p>2. 選擇「<strong class="text-amber-300">以預設瀏覽器開啟</strong>」或「<strong class="text-amber-300">以 Safari 開啟</strong>」。</p>
+      </div>
+      <button onclick="closeLineGuide()" class="mt-3 w-full py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-lg text-xs">
+        我知道了
+      </button>
+    </div>
+  </div>
+
+  <div id="imageModal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-sm flex items-center justify-center p-3 cursor-zoom-out" onclick="closeModal()">
+    <div class="relative max-w-3xl max-h-[90vh] flex flex-col items-center" onclick="event.stopPropagation()">
+      <img id="modalImg" src="" class="max-w-full max-h-[80vh] rounded-lg shadow-2xl object-contain border border-slate-700">
+      <p id="modalCaption" class="mt-2 text-xs text-slate-200 font-medium text-center"></p>
+      <button onclick="closeModal()" class="absolute -top-3 -right-3 w-8 h-8 bg-slate-800 hover:bg-slate-700 text-white rounded-full flex items-center justify-center font-bold text-sm border border-slate-600 shadow-md">✕</button>
+    </div>
+  </div>
+
+  <script>
+    let allProducts = [];
+    let filteredProducts = [];
+    let currentPage = 1;
+    let currentViewMode = 'card';
+    const PAGE_SIZE = 12;
+
+    // 【並行連線節流器】：嚴格限制同時只有 2 個連線在抓圖，徹底排除排隊堵塞
+    const MAX_CONCURRENT_DOWNLOADS = 2;
+    let activeDownloads = 0;
+    const downloadQueue = [];
+    const loadedImages = new Set(); // 本地已載入快取池
+
+    function processQueue() {
+      while (activeDownloads < MAX_CONCURRENT_DOWNLOADS && downloadQueue.length > 0) {
+        const img = downloadQueue.shift();
+        const targetSrc = img.dataset.src;
+        if (!targetSrc) continue;
+
+        activeDownloads++;
+        const loader = new Image();
+        loader.onload = () => {
+          img.src = targetSrc;
+          img.classList.remove('img-placeholder');
+          img.removeAttribute('data-src');
+          loadedImages.add(targetSrc);
+          activeDownloads--;
+          processQueue();
+        };
+        loader.onerror = () => {
+          handleImageError(img, JSON.parse(img.dataset.itemInfo || '{}'));
+          activeDownloads--;
+          processQueue();
+        };
+        loader.src = targetSrc;
+      }
+    }
+
+    function queueImageLoad(img) {
+      const src = img.dataset.src;
+      if (!src) return;
+
+      // 如果已經在快取池中，瞬間直出，完全不排隊
+      if (loadedImages.has(src)) {
+        img.src = src;
+        img.classList.remove('img-placeholder');
+        img.removeAttribute('data-src');
+        return;
+      }
+
+      if (!downloadQueue.includes(img)) {
+        downloadQueue.push(img);
+        processQueue();
+      }
+    }
+
+    let observer = null;
+    function initObserver() {
+      if ('IntersectionObserver' in window) {
+        observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              queueImageLoad(img);
+              observer.unobserve(img);
+            }
+          });
+        }, { rootMargin: "120px 0px" });
+      }
+    }
+
+    function checkLineBrowser() {
+      const ua = navigator.userAgent || navigator.vendor || window.opera;
+      if (ua.indexOf("Line") > -1) {
+        document.getElementById('lineBrowserBanner').classList.remove('hidden');
+      }
+    }
+
+    function openInExternalBrowser() {
+      const currentUrl = window.location.href.split('?')[0];
+      const ua = navigator.userAgent || navigator.vendor || window.opera;
+      if (/android/i.test(ua)) {
+        window.location.href = `intent://${window.location.host}${window.location.pathname}#Intent;scheme=https;package=com.android.chrome;end`;
+      } else {
+        if (ua.indexOf("Line") > -1) {
+          document.getElementById('lineGuideModal').classList.remove('hidden');
+        } else {
+          window.open(currentUrl, '_blank');
+        }
+      }
+    }
+
+    function closeLineGuide() {
+      document.getElementById('lineGuideModal').classList.add('hidden');
+    }
+
+    async function init() {
+      try {
+        checkLineBrowser();
+        initObserver();
+        const res = await fetch('data.json?t=' + Date.now());
+        allProducts = await res.json();
+        filteredProducts = allProducts;
+        
+        updateDynamicHeaders();
+        renderPage();
+      } catch (err) {
+        document.getElementById('productGrid').innerHTML = '<p class="text-rose-400 p-4">無法載入 data.json</p>';
+      }
+    }
+
+    function updateDynamicHeaders() {
+      if (allProducts.length === 0) return;
+      let brand = allProducts[0].brand || "預購商品";
+      let closeDate = allProducts[0].close_date || "依公告";
+      let subtitle = allProducts[0].subtitle || "熱血現貨與預購專區";
+
+      document.getElementById('pageTitle').innerText = `${brand}預購目錄 ｜ 截止：${closeDate} - 爪哇魯多模型店`;
+      document.getElementById('headerBrand').innerText = brand;
+      document.getElementById('headerCloseDate').innerText = closeDate;
+      document.getElementById('headerSubtitle').innerText = subtitle;
+    }
+
+    function switchViewMode(mode) {
+      currentViewMode = mode;
+      const btnCard = document.getElementById('btnCardMode');
+      const btnList = document.getElementById('btnListMode');
+      const cardView = document.getElementById('productGrid');
+      const listView = document.getElementById('productList');
+
+      if (mode === 'card') {
+        btnCard.className = "px-2 py-1 rounded bg-amber-500 text-slate-950 font-bold";
+        btnList.className = "px-2 py-1 rounded text-slate-300 hover:text-white font-bold";
+        cardView.classList.remove('hidden');
+        listView.classList.add('hidden');
+      } else {
+        btnList.className = "px-2 py-1 rounded bg-amber-500 text-slate-950 font-bold";
+        btnCard.className = "px-2 py-1 rounded text-slate-300 hover:text-white font-bold";
+        listView.classList.remove('hidden');
+        cardView.classList.add('hidden');
+      }
+      renderPage();
+    }
+
+    function openModal(src, title) {
+      document.getElementById('modalImg').src = src;
+      document.getElementById('modalCaption').innerText = title;
+      document.getElementById('imageModal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('imageModal').classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+
+    function getImageUrl(item) {
+      const subpath = item.img_subpath || `Default/${item.barcode || 'NO_BARCODE'}.webp`;
+      return `./images/${subpath}`;
+    }
+
+    function handleImageError(img, item) {
+      const barcode = item.barcode || 'NO_BARCODE';
+      const brand = item.brand || 'Default';
+      if (!img.dataset.triedFallback) {
+        img.dataset.triedFallback = "true";
+        img.src = `./images/${brand}/${barcode}.jpg`;
+      } else {
+        img.onerror = null;
+        img.src = `https://placehold.co/300x300/1e293b/94a3b8?text=${barcode}`;
+      }
+    }
+
+    function createCard(item) {
+      const finalImg = getImageUrl(item);
+      const isCached = loadedImages.has(finalImg);
+      const srcAttr = isCached ? `src="${finalImg}"` : `src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="${finalImg}"`;
+      const placeholderClass = isCached ? '' : 'img-placeholder';
+
+      return `
+        <div class="bg-slate-900 border border-slate-800 rounded-lg overflow-hidden flex flex-col justify-between shadow text-xs">
+          <div>
+            <div class="relative w-full card-img-container bg-slate-800/80 overflow-hidden cursor-zoom-in flex items-center justify-center" 
+                 onclick="openModal('${finalImg}', '${item.name.replace(/'/g, "\\'")}')">
+              <img ${srcAttr} data-item-info='${JSON.stringify(item).replace(/'/g, "&apos;")}' alt="${item.name}" 
+                   class="lazy-img ${placeholderClass} w-full h-full object-contain p-1" />
+              <span class="absolute top-1 left-1 px-1.5 py-0.5 text-[9px] font-semibold bg-slate-950/80 text-amber-300 rounded backdrop-blur-sm">
+                ${item.brand}
+              </span>
+              <span class="absolute bottom-1 right-1 px-1 py-0.5 text-[8px] bg-slate-900/70 text-slate-300 rounded">
+                🔍
+              </span>
+            </div>
+            
+            <div class="p-1.5 space-y-1">
+              <div class="flex items-center justify-between text-[10px]">
+                <span class="text-slate-400 bg-slate-800 px-1 rounded">#${item.id}</span>
+                <span class="font-mono text-amber-400/80 truncate ml-1 text-[10px]">${item.barcode}</span>
+              </div>
+              <h2 class="font-semibold text-slate-100 line-clamp-2 leading-tight min-h-[2rem] text-[11px]" title="${item.name}">${item.name}</h2>
+              <div class="text-[10px] text-slate-400 flex justify-between pt-0.5 border-t border-slate-800/60">
+                <span>上市: ${item.release_date}</span>
+                <span class="text-rose-400 font-semibold">截止: ${item.close_date}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-1.5 pt-0 border-t border-slate-800/80 mt-1 space-y-1">
+            <div class="flex items-baseline justify-between pt-0.5">
+              <span class="text-[10px] text-slate-400 font-medium">特惠價</span>
+              <span class="text-xs sm:text-sm font-black text-amber-400">NT$ ${item.preorder_price}</span>
+            </div>
+            <div class="grid grid-cols-2 gap-1 pt-0.5">
+              <button onclick="copyOrder('${item.barcode}', '${item.name.replace(/'/g, "\\'")}', ${item.preorder_price})" 
+                      class="py-1 text-[10px] font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 rounded transition flex items-center justify-center truncate">
+                <span>📋 複製</span>
+              </button>
+              <a href="https://m.me/JavaRudo" target="_blank" rel="noopener noreferrer"
+                 class="py-1 text-[10px] font-bold bg-blue-600 hover:bg-blue-500 text-white rounded transition flex items-center justify-center truncate">
+                <span>💬 訂購</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function createListItem(item) {
+      const finalImg = getImageUrl(item);
+      const isCached = loadedImages.has(finalImg);
+      const srcAttr = isCached ? `src="${finalImg}"` : `src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="${finalImg}"`;
+      const placeholderClass = isCached ? '' : 'img-placeholder';
+
+      return `
+        <div class="bg-slate-900 border border-slate-800 rounded-lg overflow-hidden shadow flex text-xs">
+          <div class="w-20 sm:w-28 aspect-square bg-slate-800/80 relative flex-shrink-0 cursor-zoom-in flex items-center justify-center p-1"
+               onclick="openModal('${finalImg}', '${item.name.replace(/'/g, "\\'")}')">
+            <img ${srcAttr} data-item-info='${JSON.stringify(item).replace(/'/g, "&apos;")}' alt="${item.name}" 
+                 class="lazy-img ${placeholderClass} w-full h-full object-contain" />
+          </div>
+          <div class="flex-1 p-2 flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-center text-[10px] text-slate-400">
+                <span class="font-medium text-slate-300">#${item.id} ｜ ${item.brand}</span>
+                <span class="font-mono text-amber-400/90">${item.barcode}</span>
+              </div>
+              <h3 class="font-semibold text-slate-100 text-xs mt-0.5 leading-snug line-clamp-2">${item.name}</h3>
+              <p class="text-[10px] text-slate-400 mt-0.5">上市: ${item.release_date} ｜ <span class="text-rose-400">截止: ${item.close_date}</span></p>
+            </div>
+            
+            <div class="flex items-center justify-between pt-1.5 border-t border-slate-800/80 gap-2 mt-1">
+              <div class="flex items-baseline gap-1">
+                <span class="text-[10px] text-slate-400">特惠價</span>
+                <span class="text-sm font-black text-amber-400 font-mono">NT$ ${item.preorder_price}</span>
+              </div>
+              <div class="flex gap-1.5">
+                <button onclick="copyOrder('${item.barcode}', '${item.name.replace(/'/g, "\\'")}', ${item.preorder_price})" 
+                        class="px-2 py-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded text-[10px] flex items-center justify-center">
+                  📋 複製
+                </button>
+                <a href="https://m.me/JavaRudo" target="_blank" rel="noopener noreferrer"
+                   class="px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded text-[10px] flex items-center justify-center">
+                  💬 私訊
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderPage() {
+      const cardContainer = document.getElementById('productGrid');
+      const listContainer = document.getElementById('productList');
+      cardContainer.innerHTML = '';
+      listContainer.innerHTML = '';
+
+      const totalItems = filteredProducts.length;
+      const totalPages = Math.max(1, Math.ceil(totalItems / PAGE_SIZE));
+      if (currentPage > totalPages) currentPage = totalPages;
+
+      const startIndex = (currentPage - 1) * PAGE_SIZE;
+      const endIndex = Math.min(startIndex + PAGE_SIZE, totalItems);
+      const currentBatch = filteredProducts.slice(startIndex, endIndex);
+
+      currentBatch.forEach(item => {
+        if (currentViewMode === 'card') {
+          cardContainer.insertAdjacentHTML('beforeend', createCard(item));
+        } else {
+          listContainer.insertAdjacentHTML('beforeend', createListItem(item));
+        }
+      });
+
+      // 註冊視口觀察器（精準派工）
+      const lazyImages = document.querySelectorAll('.lazy-img[data-src]');
+      if (observer) {
+        lazyImages.forEach(img => observer.observe(img));
+      } else {
+        lazyImages.forEach(img => queueImageLoad(img));
+      }
+
+      document.getElementById('pageInfo').innerText = `第 ${currentPage} / ${totalPages} 頁 (本頁 ${currentBatch.length} 項, 共 ${totalItems} 項)`;
+      renderPaginationControls(totalPages);
+    }
+
+    function renderPaginationControls(totalPages) {
+      const ctrls = document.getElementById('paginationControls');
+      ctrls.innerHTML = '';
+
+      const prevBtn = document.createElement('button');
+      prevBtn.innerText = "◀ 上一頁";
+      prevBtn.disabled = (currentPage === 1);
+      prevBtn.className = `px-2 py-0.5 rounded border border-slate-700 text-[11px] ${currentPage === 1 ? 'opacity-40 cursor-not-allowed' : 'bg-slate-800 hover:bg-amber-500 hover:text-slate-950 transition'}`;
+      prevBtn.onclick = () => { 
+        if (currentPage > 1) { 
+          currentPage--; 
+          renderPage(); 
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } 
+      };
+      ctrls.appendChild(prevBtn);
+
+      for (let i = 1; i <= totalPages; i++) {
+        const pBtn = document.createElement('button');
+        pBtn.innerText = i;
+        if (i === currentPage) {
+          pBtn.className = "px-2 py-0.5 rounded font-bold bg-amber-500 text-slate-950 shadow text-[11px]";
+        } else {
+          pBtn.className = "px-2 py-0.5 rounded bg-slate-800 border border-slate-700 hover:bg-slate-700 transition text-[11px]";
+          pBtn.onclick = () => { 
+            currentPage = i; 
+            renderPage(); 
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          };
+        }
+        ctrls.appendChild(pBtn);
+      }
+
+      const nextBtn = document.createElement('button');
+      nextBtn.innerText = "下一頁 ▶";
+      nextBtn.disabled = (currentPage === totalPages);
+      nextBtn.className = `px-2 py-0.5 rounded border border-slate-700 text-[11px] ${currentPage === totalPages ? 'opacity-40 cursor-not-allowed' : 'bg-slate-800 hover:bg-amber-500 hover:text-slate-950 transition'}`;
+      nextBtn.onclick = () => { 
+        if (currentPage < totalPages) { 
+          currentPage++; 
+          renderPage(); 
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } 
+      };
+      ctrls.appendChild(nextBtn);
+    }
+
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      const kw = e.target.value.toLowerCase().trim();
+      filteredProducts = allProducts.filter(p => p.name.toLowerCase().includes(kw) || p.barcode.includes(kw) || p.brand.toLowerCase().includes(kw));
+      currentPage = 1;
+      renderPage();
+    });
+
+    function copyOrder(bc, name, price) {
+      const text = `【預購登記】[${bc}] ${name} (NT$ ${price})`;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("已成功複製商品下單格式！請至 Facebook 私訊爪哇魯多登記。");
+      });
+    }
+
+    window.onload = init;
+  </script>
+</body>
+</html>
