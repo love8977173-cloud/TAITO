@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "barcode": "840342405725",
+    "brand": "TAITO(景品)",
+    "name": "雪未來 AMP+ Figure - 雪未來全明星 2014ver.",
+    "preorder_price": 520,
+    "release_date": "2026年9月底",
+    "close_date": "9/28",
+    "subtitle": "預購商品皆可能遇到砍單，請理性訂購。",
+    "img_subpath": "TAITO景品/840342405725.webp"
+  },
+  {
+    "id": 2,
+    "barcode": "840342405732",
+    "brand": "TAITO(景品)",
+    "name": "雪未來 AMP+ Figure - 雪未來全明星 2015ver.",
+    "preorder_price": 520,
+    "release_date": "2026年9月底",
+    "close_date": "9/28",
+    "subtitle": "預購商品皆可能遇到砍單，請理性訂購。",
+    "img_subpath": "TAITO景品/840342405732.webp"
+  },
+  {
+    "id": 3,
+    "barcode": "840342405800",
+    "brand": "TAITO(景品)",
+    "name": "Overlord MOFLOCK Figure - 雅兒貝德 (逆兔女郎Ver.)",
+    "preorder_price": 490,
+    "release_date": "2026年9月底",
+    "close_date": "9/28",
+    "subtitle": "預購商品皆可能遇到砍單，請理性訂購。",
+    "img_subpath": "TAITO景品/840342405800.webp"
+  },
+  {
+    "id": 4,
+    "barcode": "840342406241",
+    "brand": "TAITO(景品)",
+    "name": "<Taito Kuji> 賽車未來 Figure - 2018Ver. 第8回合",
+    "preorder_price": 1890,
+    "release_date": "2026年9月底",
+    "close_date": "9/28",
+    "subtitle": "預購商品皆可能遇到砍單，請理性訂購。",
+    "img_subpath": "TAITO景品/840342406241.webp"
+  }
+]
