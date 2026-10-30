@@ -1,46 +1,86 @@
 [
   {
     "id": 1,
-    "barcode": "840342405725",
+    "barcode": "840342405831",
     "brand": "TAITO(景品)",
-    "name": "雪未來 AMP+ Figure - 雪未來全明星 2014ver.",
-    "preorder_price": 520,
-    "release_date": "2026年9月底",
-    "close_date": "9/28",
+    "name": "二十世紀電氣目錄 Coreful Figure - 百川稻子",
+    "preorder_price": 490,
+    "release_date": "2026年12月",
+    "close_date": "11/2",
     "subtitle": "預購商品皆可能遇到砍單，請理性訂購。",
-    "img_subpath": "TAITO景品/840342405725.webp"
+    "img_subpath": "TAITO景品/840342405831.jpeg",
+    "thumb_b64": "data:image/webp;base64,UklGRtIAAABXRUJQVlA4IMYAAACQBgCdASodACwAPzGMv1euqSajpWsx0CYJZADKyQgGeAoRjoi0a9SUGao1FKqCXukmu79pX/VxYl+9kkAAAP4WUkcTa/zJk2oA+FaPi5gv+OndY0qQZnVoODOI6UVTMVDF1U34dkt1bCv/zY24leOEE6CiBAJeB1zOcJtm5MXgMghhetdQIVJwHcfOOVZtuokg6u7ymQ2dL9YSQiiUUF3MdeOEoxdzumm6ZggfIMosW6XtWqBbFdlK/bifvk6KTrSwQFAAAAA="
   },
   {
     "id": 2,
-    "barcode": "840342405732",
+    "barcode": "840342406159",
     "brand": "TAITO(景品)",
-    "name": "雪未來 AMP+ Figure - 雪未來全明星 2015ver.",
-    "preorder_price": 520,
-    "release_date": "2026年9月底",
-    "close_date": "9/28",
+    "name": "出包王女DARKNESS MOFLOCK Figure - 茉茉 兔女郎Ver.",
+    "preorder_price": 490,
+    "release_date": "2026年12月",
+    "close_date": "11/2",
     "subtitle": "預購商品皆可能遇到砍單，請理性訂購。",
-    "img_subpath": "TAITO景品/840342405732.webp"
+    "img_subpath": "TAITO景品/840342406159.jpeg",
+    "thumb_b64": "data:image/webp;base64,UklGRswAAABXRUJQVlA4IMAAAAAwBgCdASodACwAPzGGtFKuqaSiqq350CYJQBmLMXnqpEELCJh6F1NmX7cYv9+asd6U64EPVTOgixfAAP7iwDpqdVvwESHhCfwSsd9z9MhH9SJXOzeqjyE2mO41E8IVTi4LTLum9KkVZCwfptdWacWzoOY79NrI3HCh1A9jN6j+K8dFdYN3/bShLPZTcRQx9GsINNpkDeKKn9NU+1zGQFRRymDljbshNfVYAu3mtX7JFkpiHnSdO9mLwQZIa5IAAAA="
   },
   {
     "id": 3,
-    "barcode": "840342405800",
+    "barcode": "840342405718",
     "brand": "TAITO(景品)",
-    "name": "Overlord MOFLOCK Figure - 雅兒貝德 (逆兔女郎Ver.)",
+    "name": "無職轉生3 Desktop Cute Figure - 艾莉絲 旗袍Ver.",
     "preorder_price": 490,
-    "release_date": "2026年9月底",
-    "close_date": "9/28",
+    "release_date": "2026年12月",
+    "close_date": "11/2",
     "subtitle": "預購商品皆可能遇到砍單，請理性訂購。",
-    "img_subpath": "TAITO景品/840342405800.webp"
+    "img_subpath": "TAITO景品/840342405718.jpeg",
+    "thumb_b64": "data:image/webp;base64,UklGRtAAAABXRUJQVlA4IMQAAABwBQCdASodACwAPy2AtlKuqCUiqq350CWJZADIXITyMR/jhqBHpMgmvNghQFgwf+x7E12AAP7nz1/27RUGv3VajqYya8MSGXY6S+vTBnj+AHFmGXjAsOuvLVkjZaAyse62ocHe5Hhox6bcTnqXQbCXwqbK/0OMZVQFAOTswQR3XqJvE8pTtJ21Nj3a5JL2w/cTb6LRUFuzEwGHlg+6nkflrqTn6gwP/ANUDnR5Qn21x2O699Y3DFCo+VnMVbNd83dtkAAA"
   },
   {
     "id": 4,
-    "barcode": "840342406241",
+    "barcode": "840342406203",
     "brand": "TAITO(景品)",
-    "name": "<Taito Kuji> 賽車未來 Figure - 2018Ver. 第8回合",
-    "preorder_price": 1890,
-    "release_date": "2026年9月底",
-    "close_date": "9/28",
+    "name": "超時空輝耀姬！ Coreful Figure - 輝耀 VR Ver.",
+    "preorder_price": 490,
+    "release_date": "2026年12月",
+    "close_date": "11/2",
     "subtitle": "預購商品皆可能遇到砍單，請理性訂購。",
-    "img_subpath": "TAITO景品/840342406241.webp"
+    "img_subpath": "TAITO景品/840342406203.jpeg",
+    "thumb_b64": "data:image/webp;base64,UklGRrAAAABXRUJQVlA4IKQAAACQBQCdASofACwAPy18tVKup6UitVgIAdAliWoAxkBFQwqqSsguztN2SBGJ3XOLQJ/lOpaMSgD+nWehumxlX4eQR0v+0Zg2CYfOyLp2y4mC1Mj4L83IK86OACxjIjYef93+s6fZcMZiMDbUXWzik6efyoiHo6S4EQk/MslsWBK4IeiDmPpUy6NeJGgeFlnXG2UZRhw46b+8dFKnH27FCawQwgTgAA=="
+  },
+  {
+    "id": 5,
+    "barcode": "840342406197",
+    "brand": "TAITO(景品)",
+    "name": "葬送的芙莉蓮 Coreful Figure - 芙莉蓮 (派對禮服ver.) Renewal",
+    "preorder_price": 490,
+    "release_date": "2026年12月",
+    "close_date": "11/2",
+    "subtitle": "預購商品皆可能遇到砍單，請理性訂購。",
+    "img_subpath": "TAITO景品/840342406197.jpeg",
+    "thumb_b64": "data:image/webp;base64,UklGRpoAAABXRUJQVlA4II4AAACQBQCdASodACwAPzGCu1WuqCYjKrgMAdAmCWQAs4AfcIEHTebdF4etcD6V2oUNqcAQqPbfgAD8TBKDZxYdlLu4+riiplbVtlAl0SpojTx04rOc9hhQ+wiLN9PLdyTktSibRHZnfIQmzQfC2WTRPg5vjgzkYFKPGT3J/r4d9U5AggGiwpsBeWKfpBvHwAAA"
+  },
+  {
+    "id": 6,
+    "barcode": "840342406302",
+    "brand": "TAITO(景品)",
+    "name": "戀上換裝娃娃 AMP+ Figure - 喜多川海夢 (黑江雫 文化祭Ver.)",
+    "preorder_price": 520,
+    "release_date": "2027年1月",
+    "close_date": "11/2",
+    "subtitle": "預購商品皆可能遇到砍單，請理性訂購。",
+    "img_subpath": "TAITO景品/840342406302.jpeg",
+    "thumb_b64": "data:image/webp;base64,UklGRvIAAABXRUJQVlA4IOYAAACwBgCdASodACwAPzF+ulOup6YisBqqqdAmCWcA0bwRr5/FWV0emIl3bI+XuW4v3aoAx1H511PAUOZITvR6QAD54wk4ML8wGnMXWL2R/KvFBOssSOG6Y69yvFCEMVIHRXNioCw/Kyb/fxut7oXcMiORX/9Tz8D/t3ww6MwL8Xny94EiQFDTqw6JdKDwcUHIO/NVmlErouPWij73IjOyzz332mVrPKCC6GBEEz4ErUZHEve3W+TfQ9/AZJxigwkYxll3w0V5O+/qoq6aSkDQHCOERJoScC8itgwOnI6C6jgJaETdXgAAAA=="
+  },
+  {
+    "id": 7,
+    "barcode": "840342406456",
+    "brand": "TAITO(景品)",
+    "name": "戀上換裝娃娃 Coreful Figure - 喜多川海夢(泳裝Ver.) Renewal",
+    "preorder_price": 490,
+    "release_date": "2027年2月",
+    "close_date": "11/2",
+    "subtitle": "預購商品皆可能遇到砍單，請理性訂購。",
+    "img_subpath": "TAITO景品/840342406456.jpeg",
+    "thumb_b64": "data:image/webp;base64,UklGRogAAABXRUJQVlA4IHwAAACQBACdASodACwAPzGGulSuqKWjJW5h0CYJQBgyAJRHxYLWA+W5iSaG23X18AAA5xm2M7bmxSIvsgBLUO14bFCFQGq0yuLFyVmIGDOkPGlskjBYNxdWMM7mhrznZ9DVChWZjoyoIm7khPC0bsggrL5XkWeRnhqF1loYAAAA"
   }
 ]
